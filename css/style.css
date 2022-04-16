@@ -12,6 +12,7 @@
     --color-gold: #F2B138;
     --color-blue: #003F63;
     --color-dodger: dodgerblue;
+    --color-footer: #003f63;
 }
 
 body {
@@ -34,6 +35,30 @@ div.logo a {
     padding-right: 2rem;
 }
 
+.companyName {
+    font-size: 2rem;
+    font-weight: 900;
+    font-style: italic;
+    text-decoration: none;
+    color: white;
+    line-height: 2.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}
+
+.companySlogan {
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: italic;
+    text-decoration: none;
+    color: white;
+    line-height: 2.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}
+
 header {
     background-color: #2c2c30;
 }
@@ -41,6 +66,8 @@ header {
 h1 {
     text-align: center;
     font-size: 2.0rem;
+    margin: 0;
+    padding: 1rem 0;
 }
 
 h3 {
@@ -108,11 +135,8 @@ nav.menu.open a:active {
 
 label {
     margin-bottom: 0;
-    line-height: 1.5;
     font-size: inherit;
-    margin-bottom: 0;
-    font-size: inherit;
-    line-height: 1.5;
+    line-height: 2.0;
     padding-top: calc(.375rem + 1px);
     padding-bottom: calc(.375rem + 1px);
 }
@@ -144,9 +168,83 @@ input {
     width: 1em;
 }
 
+input:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0px 0px 0.5rem 0.25rem rgb(13 110 253 / 25%);
+}
+
 input:checked {
     background-color: #1f78bf;
     border-color: #1f78bf;
+}
+
+fieldset {
+    padding: 1rem 0 0 0;
+    border: 1px solid transparent;
+    margin: 0;
+}
+
+legend {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+label {
+    font-weight: bold;
+}
+
+input:required {
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' focusable='false' data-prefix='ico' data-icon='asterisk' class='asterisk' role='img' viewBox='0 0 512 512'%3E%3Cpath fill='red' d='M478.21 334.093L336 256l142.21-78.093c11.795-6.477 15.961-21.384 9.232-33.037l-19.48-33.741c-6.728-11.653-21.72-15.499-33.227-8.523L296 186.718l3.475-162.204C299.763 11.061 288.937 0 275.48 0h-38.96c-13.456 0-24.283 11.061-23.994 24.514L216 186.718 77.265 102.607c-11.506-6.976-26.499-3.13-33.227 8.523l-19.48 33.741c-6.728 11.653-2.562 26.56 9.233 33.037L176 256 33.79 334.093c-11.795 6.477-15.961 21.384-9.232 33.037l19.48 33.741c6.728 11.653 21.721 15.499 33.227 8.523L216 325.282l-3.475 162.204C212.237 500.939 223.064 512 236.52 512h38.961c13.456 0 24.283-11.061 23.995-24.514L296 325.282l138.735 84.111c11.506 6.976 26.499 3.13 33.227-8.523l19.48-33.741c6.728-11.653 2.563-26.559-9.232-33.036z'%3E%3C/path%3E%3C/svg%3E");
+    background-position: right 16px center;
+    background-size: 1em;
+}
+
+.button-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.button-group button {
+    width: 50%;
+}
+
+.button-group .btn-6 {
+    width: 50% !important;
+}
+
+.button-group .btn-4 {
+    width: 33% !important;
+}
+
+.button-group button {
+    margin: 0;
+    border-radius: 0;
+    background-color: #f8f8f8;
+    border-color: #003f63;
+    color: #003f63;
+}
+
+.button-group button:first-of-type {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.button-group button:last-of-type {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.button-group button.checked {
+    background-color: #003f63;
+    border-color: #003f63;
+    color: whitesmoke;
 }
 
 .form-group {
@@ -182,6 +280,86 @@ input:checked {
 
 .alignCenter {
     text-align: center;
+}
+
+footer {
+    min-height: 300px;
+    background-color: var(--color-footer);
+    color: var(--color-light);
+    padding: 1rem;
+    margin-top: 3rem;
+}
+
+.btn {
+    border: 1px solid #003f63;
+    background-color: #003f63;
+    border-radius: 6px;
+    /* margin: 4px; */
+    padding: 6px 12px;
+    color: whitesmoke;
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    width: 100%;
+    font-size: 1.1rem;
+    line-height: 2rem;
+}
+
+main {
+    padding: 0;
+}
+
+div#filters {
+    border-bottom: 3px solid grey;
+    margin-bottom: 6px;
+    padding: 6px;
+}
+
+div#choices,
+div#filters {
+    padding: 6px;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.btn.basic {
+    background-color: #003f63a1;
+    border-color: #003f63;
+    /*color: #003f63;*/
+    color: #f8f8f8;
+}
+
+.btn.advanced {
+    background-color: rgb(0 63 99 / 83%);
+    border-color: rgb(0 63 99);
+    color: #feffd6;
+}
+
+form.newStudent {
+    padding: 1rem;
+}
+
+div#students {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    padding: 0 0.5rem;
+}
+
+.student .buttons {
+    text-align: right;
+}
+
+.student .gender {
+    text-align: center;
+}
+
+.male {
+    color: dodgerblue;
+}
+
+.female {
+    color: hotpink;
 }
 
 @media screen and (min-width: 992px) {

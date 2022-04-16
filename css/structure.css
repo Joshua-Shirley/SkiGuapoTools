@@ -97,6 +97,11 @@ header .hamburger span:nth-child(2) {
     transform-origin: 0% 0%;
 }
 
+svg {
+    max-height: 32px;
+    margin-right: 16px;
+}
+
 .checked span {
     opacity: 1;
     transform: rotate(45deg) translate(0px, 0px);
@@ -141,6 +146,7 @@ nav.menu.open a:active {
 main {
     margin: 0;
     padding: 1.5rem;
+    min-height: 500px;
 }
 
 footer {

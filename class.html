@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skier Movement Analysis - Ski Guapo - Ski Better</title>
+    <meta title="Movement Analysis Template" content="Skier Movement Analysis Tools">
+    <meta name="description" content="Skier Movement Analysis Tools">
+    <meta name="author" content="Josh Shirley">
+
+    <meta property="og:title" content="Movement Analysis Template">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://generic.co">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image.png">
+
+    <link rel="icon" href="media/favicon/favicon.ico">
+
+    <link rel="apple-touch-icon" href="media/favicon/apple-touch-icon.png">
+
+    <!-- External stylesheet -->
+
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/structure.css">
+
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+
+    <style>
+        .activeInput {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            background-color: whitesmoke;
+            padding-top: 3rem;
+        }
+        
+        .inputgroup {
+            padding: 6px 12px;
+        }
+        
+        .suggestion {
+            font-size: 1.2rem;
+            line-height: 2.4rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' focusable='false' data-prefix='ico' data-icon='arrow-right' class='arrow right' role='img' viewBox='0 0 448 512'%3E%3Cpath fill='currentColor' d='M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 24px;
+            padding: 0.5rem 12px;
+        }
+        
+        div.searchHelp {
+            padding: 0;
+        }
+        
+        .suggestion:hover {
+            background-color: white;
+            color: #1f78bf;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' focusable='false' data-prefix='ico' data-icon='arrow-right' class='arrow right' role='img' viewBox='0 0 448 512'%3E%3Cpath fill='%23003f63' d='M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z'%3E%3C/path%3E%3C/svg%3E");
+        }
+    </style>
+
+    <!-- Pre Load Javascripts -->
+
+    <script src="js/groups.js"></script>
+    <script src="js/skiers.js"></script>
+
+    <script src="js/localStorage.js"></script>
+    <script src="js/icons.js "></script>
+    <script src="js/classView.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">SkiGuapo</a>
+            </div>
+
+            <nav class="menu" id="mainMenu">
+                <!-- Edit links in the menu.js file -->
+            </nav>
+
+            <div class="hamburger" id="activateMenu" onclick="Menu.toggle();">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+        <h1>Class</h1>
+
+        <section id="classGroup">
+
+            <div id="students">
+                <div class="row student">
+                </div>
+            </div>
+        </section>
+
+        <section id="newStudent">
+
+            <div class="error" id="formError"></div>
+
+            <form name="student" class="newStudent" onsubmit="event.preventDefault(); validateNewStudent();">
+                <fieldset>
+                    <legend>New Skier</legend>
+
+                    <div class="mb-3">
+                        <div class="inputgroup">
+                            <label for="studentFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" tabindex="1" required>
+                        </div>
+                        <div class="searchHelp" id="helpFirstName"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="inputgroup">
+                            <label for="studentLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="studentLastName" name="studentLastName">
+                        </div>
+                        <div class="searchHelp" id="helpLastName"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="inputgroup">
+                            <label for="studentAge" class="form-label">Age</label>
+                            <input type="number" class="form-control" id="studentAge" name="studentAge" min="6" max="90" value="18" />
+                        </div>
+                        <div class="searchHelp" id="helpAge"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="studentGender" class="form-label">Gender</label>
+                        <div class="button-group">
+                            <button class="btn checked" type="button" name="studentGender" value="male" checked="checked">Male</button>
+                            <button class="btn" type="button" name="studentGender" value="female">Female</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 alignCenter">
+                        <button type="submit" class="btn submit">Add To Class</button>
+                    </div>
+
+                </fieldset>
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container ">
+            <div class="row ">
+                <div class="col-12 ">
+                    <div class="companyName ">
+                        SkiGuapo
+                    </div>
+                    <div class="companySlogan ">
+                        Ski guapo, ski better.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-12 ">
+                    <p class="version alignCenter ">Current Version: <span id="versionNumber ">1.00</span></p>
+                    <p class="publicLicense alignCenter ">This application is shared using a <a href="public-license.html " target="_blank ">GNU GENERAL PUBLIC LICENSE</a>. </p>
+                    <p class="copyright alignCenter ">Copyright &copy; <span id="copyrightYear">2021</span>, Joshua Shirley</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Final Load Javascripts -->
+    <!-- Majority of js code should go here -->
+
+    <script src="js/menu.js "></script>
+    <script src="js/footer.js "></script>
+
+    <script src="js/names.js"></script>
+
+    <script>
+        document.querySelectorAll(".button-group button").forEach(button => {
+            button.addEventListener("click", event => {
+                document.querySelectorAll(".button-group button").forEach(b => {
+                    b.classList.remove("checked");
+                    b.removeAttribute("checked");
+                });
+                button.classList.add("checked");
+                button.setAttribute("checked", "checked");
+            });
+        });
+
+        function validateNewStudent() {
+
+            var user = {};
+            user.firstName = document.querySelector("input#studentFirstName").value;
+            user.lastName = document.querySelector("input#studentLastName").value;
+            user.age = document.querySelector("input#studentAge").value;
+            user.gender = document.querySelectorAll("button[name='studentGender'].checked")[0].value[0];
+
+            // Add to the skier array
+            skiers.push(user.firstName, user.lastName, user.age, user.gender);
+
+            // Add skier id to the class group
+            var index = group.filter(g => g.id == classView.currentGroup)[0];
+            index.list.push(user.id);
+
+
+            classView.studentView();
+        }
+
+        function searchNames(searchString) {
+            var list = names.male.filter(n => n.toLowerCase().indexOf(searchString.toLowerCase()) > -1);
+            return list;
+        }
+
+        document.querySelectorAll("form.newStudent input").forEach(input => {
+            input.addEventListener("focus", event => {
+                input.closest(".mb-3").classList.add("activeInput");
+            });
+        });
+
+        /*
+        document.querySelectorAll("form.newStudent input").forEach(input => {
+            input.addEventListener("blur", event => {
+                input.closest(".mb-3").classList.remove("activeInput");
+                document.querySelectorAll("div.searchHelp").forEach(div => {
+                    div.innerHTML = "";
+                });
+            });
+        });
+        */
+
+        document.getElementById("studentFirstName").addEventListener("keyup", function() {
+            if (this.value.length > 1) {
+                var h = document.getElementById("helpFirstName");
+                h.innerHTML = "";
+                var l = searchNames(this.value);
+                l.slice(0, 10).forEach(n => {
+                    span = document.createElement("div");
+                    span.classList.add("suggestion");
+                    span.innerHTML = n;
+                    h.appendChild(span);
+                });
+            }
+            document.querySelectorAll(".suggestion").forEach(sug => {
+                sug.addEventListener("click", event => {
+                    document.getElementById("studentFirstName").value = sug.innerText;
+
+                    // remove the activeInput class
+                    var a = sug.closest(".activeInput");
+                    a.classList.remove("activeInput");
+
+                    // remove the suggestions
+                    document.querySelector(".searchHelp").innerHTML = "";
+
+                    // progress the focus to the next input
+                    document.getElementById("studentLastName").focus();
+                });
+            });
+        });
+
+        document.getElementById("studentLastName").addEventListener("keyup", function() {
+            if (this.value.length > 1) {
+                var h = document.getElementById("helpLastName");
+                h.innerHTML = "";
+                var l = searchNames(this.value);
+                l.slice(0, 10).forEach(n => {
+                    console.log(n);
+                });
+            }
+        });
+    </script>
+    <!--
+        Requirements should only be used on the settings page.
+    <script src="js/requirements.js "></script>
+    -->
+
+    <!-- Inessential Optional Add Ons -->
+    <script src="js/scrollTopButton.js "></script>
+
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skier Movement Analysis - Ski Guapo - Ski Better</title>
+    <meta title="Movement Analysis Template" content="Skier Movement Analysis Tools">
+    <meta name="description" content="Skier Movement Analysis Tools">
+    <meta name="author" content="Josh Shirley">
+
+    <meta property="og:title" content="Movement Analysis Template">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://generic.co">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image.png">
+
+    <link rel="icon" href="media/favicon/favicon.ico">
+
+    <link rel="apple-touch-icon" href="media/favicon/apple-touch-icon.png">
+
+    <!-- External stylesheet -->
+
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/structure.css">
+
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+
+    <style>
+        #secondaryMenu .col-6 {
+            padding: 0 6px;
+        }
+        
+        svg.arrow.right {
+            height: 24px;
+        }
+    </style>
+
+    <!-- Pre Load Javascripts -->
+
+    <script src="js/groups.js"></script>
+    <script src="js/skiers.js"></script>
+
+    <script src="js/localStorage.js"></script>
+    <script src="js/icons.js "></script>
+
+
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">SkiGuapo</a>
+            </div>
+
+            <nav class="menu" id="mainMenu">
+                <!-- Edit links in the menu.js file -->
+            </nav>
+
+            <div class="hamburger" id="activateMenu" onclick="Menu.toggle();">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+        <h1>Groups</h1>
+
+        <section id="classGroup">
+            <div class="row" id="secondaryMenu">
+                <div class="col-6"><button type="button" class="btn" name="newGroup" onclick="group.newClass();">New Group</button></div>
+                <div class="col-6"><button type="button" class="btn" name="pastGroups" onclick="">Past Groups</button></div>
+            </div>
+
+        </section>
+
+        <section id="newGroup">
+            <style>
+                .button-group button {
+                    line-height: 1.6rem;
+                    font-size: 0.8888888888888em;
+                }
+                
+                form.form {
+                    padding: 0.8rem;
+                }
+                
+                form.form .btn {
+                    line-height: 18px;
+                    font-size: 1rem;
+                }
+            </style>
+            <form class="form">
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="inputGroup">
+                            <label for="classDate">Date</label>
+                            <input type="date" name="classDate" id="classDate" placeholder="">
+                            <script>
+                                var d = new Date();
+                                Date.prototype.toDateInputValue = (function() {
+                                    var local = new Date(this);
+                                    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+                                    return local.toJSON().slice(0, 10);
+                                });
+                                document.getElementById("classDate").value = d.toDateInputValue();
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="inputGroup">
+                            <label for="classDuration">Duration</label>
+                            <div class="button-group" id="classDuration">
+                                <button class="btn btn-4 checked" type="button" name="classDuration" value="Full Day" checked="checked">Full Day</button>
+                                <button class="btn btn-4" type="button" name="classDuration" value="Half Day AM" checked="checked">Half AM</button>
+                                <button class="btn btn-4" type="button" name="classDuration" value="Half Day PM" checked="checked">Half PM</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="inputGroup">
+                            <label for="className">Group Name</label>
+                            <input type="text" name="className" id="className" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="inputGroup">
+                            <label for="classType">Group Type</label>
+                            <div class="button-group" id="classType">
+                                <button class="btn btn-4 checked" type="button" name="classType" value="Private" checked="checked">Private</button>
+                                <button class="btn btn-4" type="button" name="classType" value="Group" checked="checked">Group</button>
+                                <button class="btn btn-4" type="button" name="classType" value="Locals Program" checked="checked">Local's</button>
+                            </div>
+                        </div>
+                        <script>
+                            function addCls(ele) {
+                                document.querySelectorAll("#classType button").forEach(b => {
+                                    b.classList.remove("checked");
+                                });
+                                ele.classList.add("checked");
+                            };
+
+                            document.querySelectorAll("#classType button").forEach(b => {
+                                b.addEventListener("click", event => {
+                                    addCls(b);
+                                });
+                            });
+
+                            document.querySelectorAll("#classDuration button").forEach(b => {
+                                b.addEventListener("click", event => {
+                                    document.querySelectorAll("#classDuration button").forEach(b => {
+                                        b.classList.remove("checked")
+                                    });
+
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <button class="btn" type="submit">Save</button>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </form>
+
+        </section>
+
+        <section class="" id="pastGroups">
+            <h3>Group History</h3>
+
+            <style>
+                table,
+                table * {
+                    border-collapse: collapse;
+                }
+                
+                td,
+                th {
+                    display: table-cell;
+                    border-collapse: collapse;
+                }
+                
+                tbody,
+                td,
+                tfoot,
+                th,
+                thead,
+                tr {}
+                
+                .table {
+                    width: 100%;
+                }
+                
+                .table thead {}
+                
+                .table thead tr th {
+                    border-bottom: 2px solid black;
+                }
+                
+                .table td:nth-child(last) {
+                    text-align: right;
+                }
+                
+                td:last-child {
+                    text-align: right;
+                }
+                
+                .table svg.arrow.right {
+                    padding: 0;
+                }
+            </style>
+
+            <div id="pastGroupList"></div>
+        </section>
+
+        <section id="students">
+            <h3>Students</h3>
+
+        </section>
+
+        <script src="js/tables.js"></script>
+    </main>
+
+    <footer>
+        <div class="container ">
+            <div class="row ">
+                <div class="col-12 ">
+                    <div class="companyName ">
+                        SkiGuapo
+                    </div>
+                    <div class="companySlogan ">
+                        Ski guapo, ski better.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-12 ">
+                    <p class="version alignCenter ">Current Version: <span id="versionNumber ">1.00</span></p>
+                    <p class="publicLicense alignCenter ">This application is shared using a <a href="public-license.html " target="_blank ">GNU GENERAL PUBLIC LICENSE</a>. </p>
+                    <p class="copyright alignCenter ">Copyright &copy; <span id="copyrightYear">2021</span>, Joshua Shirley</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Final Load Javascripts -->
+    <!-- Majority of js code should go here -->
+
+    <script src="js/menu.js "></script>
+    <script src="js/footer.js "></script>
+
+    <script src="js/names.js"></script>
+
+
+    <!--
+        Requirements should only be used on the settings page.
+    <script src="js/requirements.js "></script>
+    -->
+
+    <!-- Inessential Optional Add Ons -->
+    <script src="js/scrollTopButton.js "></script>
+
+</body>
+
+</html>

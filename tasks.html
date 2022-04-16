@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skier Movement Analysis - Ski Guapo - Ski Better</title>
+    <meta title="Movement Analysis Template" content="Skier Movement Analysis Tools">
+    <meta name="description" content="Skier Movement Analysis Tools">
+    <meta name="author" content="Josh Shirley">
+
+    <meta property="og:title" content="Movement Analysis Template">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://generic.co">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image.png">
+
+    <link rel="icon" href="media/favicon/favicon.ico">
+
+    <link rel="apple-touch-icon" href="media/favicon/apple-touch-icon.png">
+
+    <!-- External stylesheet -->
+
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/structure.css">
+
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+
+    <!-- Pre Load Javascripts -->
+
+
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">SkiGuapo</a>
+            </div>
+
+            <nav class="menu" id="mainMenu">
+                <!-- Edit links in the menu.js file -->
+            </nav>
+
+            <div class="hamburger" id="activateMenu" onclick="Menu.toggle();">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <style>
+        .button-group {
+            padding: 6px 6px;
+        }
+        
+        [type="checkbox"],
+        [type="radio"] {
+            width: 1rem;
+            height: 1rem;
+            margin-top: 0.25em;
+            vertical-align: top;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            margin-right: 8px;
+        }
+        
+        label,
+        [type="checkbox"] {
+            color: #2a67a1;
+        }
+        
+        [type="checkbox"]:disabled {
+            border-color: #d9d9d9;
+            background-color: #bcbbbb;
+        }
+        
+        .btn {
+            padding-right: 28px;
+        }
+        
+        .diamond {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' focusable='false' data-prefix='ico' data-icon='diamond' class='diamond' role='img' viewBox='0 0 448 512'%3E%3Cpath fill='currentColor' d='M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: 18px;
+            background-position: right 6px center;
+        }
+        
+        .square {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' focusable='false' data-prefix='ico' data-icon='square' class='square' role='img' viewBox='0 0 448 512'%3E%3Cpath fill='dodgerblue' d='M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: 18px;
+            background-position: right 6px center;
+        }
+    </style>
+    <main>
+        <h1>MA Tasks</h1>
+        <section>
+            <form name="filters" id="tasks">
+
+                <div class="" id="filters">
+
+                    <div class="button-group">
+                        <input type="checkbox" name="type" id="basic" value="Basic" />
+                        <label for="basic">Basic</label>
+                    </div>
+
+                    <div class="button-group">
+                        <input type="checkbox" name="type" id="advanced" value="Advanced" />
+                        <label for="advanced">Advanced</label>
+                    </div>
+
+                    <div class="button-group">
+                        <input type="checkbox" name="type" id="highlighted" value="Highlighted" />
+                        <label for="highlighted">Highlighted</label>
+                    </div>
+
+                    <div class="button-group">
+                        <input type="checkbox" name="level" id="level3" value="3" />
+                        <label for="level3">Level 3</label>
+                    </div>
+
+                    <div class="button-group">
+                        <input type="checkbox" name="level" id="level2" value="2" />
+                        <label for="level2">Level 2</label>
+                    </div>
+
+                    <div class="button-group">
+                        <input type="checkbox" name="level" id="level1" value="1" disabled/>
+                        <label for="level1">Level 1</label>
+                    </div>
+
+                </div>
+
+                <div class="" id="choices"></div>
+            </form>
+        </section>
+
+    </main>
+
+    <script>
+        var filters = {
+            level: [],
+            type: []
+        };
+
+        function makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() *
+                    charactersLength));
+            }
+            return result;
+        }
+
+        function showMoves() {
+
+            var links = moves;
+            if (filters.type.length > 0) {
+                links = links.filter(move => filters.type.includes(move.Type));
+            }
+            if (filters.level.length > 0) {
+                links = links.filter(move => filters.level.includes(move.Level));
+            }
+
+            document.querySelector("#choices").innerHTML = "";
+
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.name = "level";
+            btn.classList.add("sort");
+            btn.classList.add("btn");
+            btn.classList.add("ski");
+
+            links.forEach(link => {
+                var b = btn.cloneNode(true);
+                b.value = link.Task;
+                b.innerText = link.Task;
+                b.id = makeid(24);
+                if (link.Type == 'Basic') {
+                    b.classList.add("basic");
+                } else
+                if (link.Type == 'Advanced') {
+                    b.classList.add("advanced");
+                } else if (link.Type == 'Highlighted') {
+                    b.classList.add("highlighted");
+                }
+                if (link.Level == "3") {
+                    b.classList.add("diamond");
+                } else if (link.Level == "2") {
+                    b.classList.add("square");
+                } else if (link.Level == "1") {
+                    b.classList.add("circle");
+                }
+                document.querySelector("#choices").appendChild(b);
+            });
+        }
+
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState == "interactive") {
+
+                document.querySelectorAll("#filters input").forEach(f => {
+                    f.addEventListener("change", event => {
+                        //console.log(f.value);
+                        if (f.name == 'type') {
+                            if (filters.type.includes(f.value)) {
+                                filters.type = filters.type.filter(a => a != f.value);
+                            } else {
+                                filters.type.push(f.value);
+                            }
+                        }
+                        if (f.name == 'level') {
+                            if (filters.level.includes(f.value)) {
+                                filters.level = filters.level.filter(a => a != f.value);
+                            } else {
+                                filters.level.push(f.value);
+                            }
+                        }
+                        showMoves();
+                    });
+                });
+
+                showMoves();
+            }
+        });
+    </script>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="version alignCenter">Current Version: <span id="versionNumber">1.00</span></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <p class="publicLicense alignCenter">This application is shared using a <a href="public-license.html" target="_blank">GNU GENERAL PUBLIC LICENSE</a>. </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <p class="copyright alignCenter">Copyright &copy; <span id="copyrightYear">2021</span>, Joshua Shirley</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Final Load Javascripts -->
+    <!-- Majority of js code should go here -->
+    <script src="js/icons.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/footer.js"></script>
+
+    <script src="js/tasks.js"></script>
+
+    <!--
+        Requirements should only be used on the settings page.
+    <script src="js/requirements.js"></script>
+    -->
+
+    <!-- Inessential Optional Add Ons -->
+    <script src="js/scrollTopButton.js"></script>
+
+</body>
+
+</html>
